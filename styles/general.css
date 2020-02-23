@@ -1,0 +1,7 @@
+.text {
+  margin: 5px 0;
+}
+
+.amount {
+  color: var(--secondary-color);
+}
