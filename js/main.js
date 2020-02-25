@@ -3,7 +3,7 @@ import {
   addMovieSelectChangeEventListener
 } from './event-listeners.js';
 
-import populateUI from './populate-user-interface.js';
+import populateUI from './populate-ui.js';
 
 function main() {
   populateUI();

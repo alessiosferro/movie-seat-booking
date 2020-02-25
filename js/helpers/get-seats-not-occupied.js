@@ -1,3 +1,7 @@
+import seatClasses from '../constants/seat-classes.js';
+
 export default () => {
-  return document.querySelectorAll('.seat-row .seat:not(.seat--occupied)');
+  const { SEAT, ROW, OCCUPIED } = seatClasses;
+
+  return document.querySelectorAll(`.${ROW} .${SEAT}:not(.${OCCUPIED})`);
 };

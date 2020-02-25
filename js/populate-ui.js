@@ -3,6 +3,7 @@ import localStorageKeys from './constants/local-storage-keys.js';
 import DOMElements from './constants/DOM-elements.js';
 import getSeatsNotOccupied from './helpers/get-seats-not-occupied.js';
 import getSelectedSeatsIndexes from './helpers/get-selected-seats-indexes.js';
+import seatClasses from './constants/seat-classes.js';
 
 const SELECTED_SEATS = getSelectedSeatsIndexes();
 
@@ -22,21 +23,27 @@ function populateSeatsUI() {
       );
 
       if (index > -1) {
-        seatsNotOccupied.item(index).classList.add('seat--selected');
+        seatsNotOccupied.item(index).classList.add(seatClasses.SELECTED);
       }
     });
   }
 }
 
-const populateMovieSelectUI = () =>
-  (DOMElements.MOVIE_SELECT_ELEMENT.selectedIndex = getDataFromLocalStorage(
-    localStorageKeys.MOVIE
-  ));
+function populateMovieSelectUI() {
+  let selectedMovie = getDataFromLocalStorage(localStorageKeys.MOVIE);
+
+  DOMElements.MOVIE_SELECT_ELEMENT.selectedIndex = selectedMovie
+    ? selectedMovie
+    : DOMElements.MOVIE_SELECT_ELEMENT.selectedIndex;
+}
 
 const populateCountUI = () =>
   (DOMElements.COUNT.innerText = SELECTED_SEATS ? SELECTED_SEATS.length : 0);
 
-const populateTotalUI = () =>
-  (DOMElements.TOTAL.innerText =
+function populateTotalUI() {
+  let moviePrice = getDataFromLocalStorage(localStorageKeys.MOVIE_PRICE);
+
+  DOMElements.TOTAL.innerText =
     (SELECTED_SEATS ? SELECTED_SEATS.length : 0) *
-    getDataFromLocalStorage(localStorageKeys.MOVIE_PRICE));
+    (moviePrice ? moviePrice : DOMElements.MOVIE_SELECT_ELEMENT.value);
+}

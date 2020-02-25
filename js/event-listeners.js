@@ -2,6 +2,7 @@ import updateSelectedCount from './helpers/update-selected-count.js';
 import updateLocalStorage from './helpers/update-local-storage.js';
 import localStorageKeys from './constants/local-storage-keys.js';
 import DOMElements from './constants/DOM-elements.js';
+import seatClasses from './constants/seat-classes.js';
 
 export function addContainerClickEventListener() {
   DOMElements.MOVIE_CONTAINER.addEventListener('click', e => {
@@ -9,9 +10,10 @@ export function addContainerClickEventListener() {
 
     let { classList } = e.target;
     let ticketPrice = DOMElements.MOVIE_SELECT_ELEMENT.value;
+    const { SEAT, OCCUPIED, SELECTED } = seatClasses;
 
-    if (classList.contains('seat') && !classList.contains('seat--occupied'))
-      classList.toggle('seat--selected');
+    if (classList.contains(SEAT) && !classList.contains(OCCUPIED))
+      classList.toggle(SELECTED);
 
     updateSelectedCount(ticketPrice);
   });

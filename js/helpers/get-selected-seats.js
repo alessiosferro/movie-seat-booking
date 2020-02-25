@@ -1,3 +1,7 @@
+import seatClasses from '../constants/seat-classes.js';
+
 export default () => {
-  return document.querySelectorAll('.seat-row .seat.seat--selected');
+  return document.querySelectorAll(
+    `.${seatClasses.ROW} .${seatClasses.SELECTED}`
+  );
 };
