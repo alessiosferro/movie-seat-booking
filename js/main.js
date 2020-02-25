@@ -1,15 +1,14 @@
 import {
-  AddContainerClickEventListener,
-  AddMovieSelectChangeEventListener
+  addContainerClickEventListener,
+  addMovieSelectChangeEventListener
 } from './event-listeners.js';
 
-const seatDivElements = document.querySelectorAll(
-  '.seat-row .seat:not(.seat--occupied)'
-);
+import populateUI from './populate-user-interface.js';
 
-const Main = () => {
-  AddContainerClickEventListener();
-  AddMovieSelectChangeEventListener();
-};
+function main() {
+  populateUI();
+  addContainerClickEventListener();
+  addMovieSelectChangeEventListener();
+}
 
-Main();
+main();

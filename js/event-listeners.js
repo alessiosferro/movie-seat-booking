@@ -1,25 +1,29 @@
 import updateSelectedCount from './helpers/update-selected-count.js';
+import updateLocalStorage from './helpers/update-local-storage.js';
+import localStorageKeys from './constants/local-storage-keys.js';
+import DOMElements from './constants/DOM-elements.js';
 
-const MOVIE_SELECT_ELEMENT = document.getElementById('movie');
-
-export const AddContainerClickEventListener = () => {
-  const movieContainerDivElement = document.querySelector('.seats-container');
-
-  movieContainerDivElement.addEventListener('click', e => {
+export function addContainerClickEventListener() {
+  DOMElements.MOVIE_CONTAINER.addEventListener('click', e => {
     e.stopPropagation();
 
-    const { classList } = e.target;
+    let { classList } = e.target;
+    let ticketPrice = DOMElements.MOVIE_SELECT_ELEMENT.value;
+
     if (classList.contains('seat') && !classList.contains('seat--occupied'))
       classList.toggle('seat--selected');
 
-    updateSelectedCount(Number.parseInt(MOVIE_SELECT_ELEMENT.value));
+    updateSelectedCount(ticketPrice);
   });
-};
+}
 
-export const AddMovieSelectChangeEventListener = () => {
-  MOVIE_SELECT_ELEMENT.addEventListener('change', e => {
+export function addMovieSelectChangeEventListener() {
+  DOMElements.MOVIE_SELECT_ELEMENT.addEventListener('change', e => {
     e.stopPropagation();
+    let ticketPrice = e.target.value;
 
-    updateSelectedCount(Number.parseInt(MOVIE_SELECT_ELEMENT.value));
+    updateLocalStorage(localStorageKeys.MOVIE, e.target.selectedIndex);
+    updateLocalStorage(localStorageKeys.MOVIE_PRICE, e.target.value);
+    updateSelectedCount(ticketPrice);
   });
-};
+}

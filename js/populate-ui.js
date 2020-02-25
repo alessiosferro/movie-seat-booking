@@ -1,0 +1,42 @@
+import getDataFromLocalStorage from './helpers/get-data-from-local-storage.js';
+import localStorageKeys from './constants/local-storage-keys.js';
+import DOMElements from './constants/DOM-elements.js';
+import getSeatsNotOccupied from './helpers/get-seats-not-occupied.js';
+import getSelectedSeatsIndexes from './helpers/get-selected-seats-indexes.js';
+
+const SELECTED_SEATS = getSelectedSeatsIndexes();
+
+export default () => {
+  populateSeatsUI();
+  populateMovieSelectUI();
+  populateCountUI();
+  populateTotalUI();
+};
+
+function populateSeatsUI() {
+  if (SELECTED_SEATS !== null && SELECTED_SEATS.length > 0) {
+    SELECTED_SEATS.forEach(seatIndex => {
+      let seatsNotOccupied = getSeatsNotOccupied();
+      let index = [...seatsNotOccupied].findIndex(
+        (_, index) => index === seatIndex
+      );
+
+      if (index > -1) {
+        seatsNotOccupied.item(index).classList.add('seat--selected');
+      }
+    });
+  }
+}
+
+const populateMovieSelectUI = () =>
+  (DOMElements.MOVIE_SELECT_ELEMENT.selectedIndex = getDataFromLocalStorage(
+    localStorageKeys.MOVIE
+  ));
+
+const populateCountUI = () =>
+  (DOMElements.COUNT.innerText = SELECTED_SEATS ? SELECTED_SEATS.length : 0);
+
+const populateTotalUI = () =>
+  (DOMElements.TOTAL.innerText =
+    (SELECTED_SEATS ? SELECTED_SEATS.length : 0) *
+    getDataFromLocalStorage(localStorageKeys.MOVIE_PRICE));
